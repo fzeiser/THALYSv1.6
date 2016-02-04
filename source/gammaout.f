@@ -61,7 +61,7 @@ c
      +  " (",i3,a2,") "/)') Z,N,A,nuc(Z)
       write(*,'(" S-wave strength function parameters:"/)')
       write(*,'(" Exp. total radiative width=",f10.5," eV +/-",f8.5,
-     +  " Theor. total radiative width=",f15.2," eV")')
+     +  " Theor. total radiative width=",f15.6," eV")')
      +  gamgam(Zcomp,Ncomp),dgamgam(Zcomp,Ncomp),gamgamth(Zcomp,Ncomp)
       write(*,'(" Exp. D0                   =",f10.2," eV +/-",f8.2,
      +  " Theor. D0                   =",f15.2," eV")')

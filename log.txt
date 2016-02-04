@@ -1,0 +1,7 @@
+Binary file ./omppar.o matches
+./opticalcomp.f:89:c    both from subroutine omppar.
+./talys.cmb:537:c ************************* subroutine omppar **************************
+./omppar.f:1:      subroutine omppar(Zix,Nix)
+./opticalnp.f:91:c    both from subroutine omppar.
+./structure.f:29:c omppar        : subroutine for optical model parameters
+./structure.f:61:      if ((Zix.le.2.and.Nix.le.2).or.flagompall) call omppar(Zix,Nix)

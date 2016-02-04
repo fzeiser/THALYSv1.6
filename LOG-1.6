@@ -1,0 +1,328 @@
+Development of TALYS since release of TALYS-1.4
+
+- December 28, 2011
+
+********** Release of TALYS-1.4 **********
+
+- December 30, 2011
+
+Introduced non-equidistant binning for the excitation energy grid.
+The excitation energies can now be given on a logarithmic grid,
+and this has also become the default. It allows to use less excitation 
+energy bins while not losing precision. The old situation, of TALYS-1.4
+and before, can be invoked with the new 'equidistant' keyword, but
+from now on the default will be 'equidistant n'.
+Especially for cross sections above 100 MeV the improvement is 
+significant: smoothness and more reliable absolute values.
+TALYS can now technically be used up to 600 MeV, though I did
+not validate that with experimental data yet.
+
+- January 2, 2012
+
+Added the extra MT numbers 152-200, introduced in the ENDF-6 format 
+in 2010, in the normalization subroutine.
+
+- January 9, 2012
+
+Multiplied the normalization factor for stripping reactions for 
+helions with a factor of 5 to better fit (n,h) data.
+
+- January 16, 2012
+
+Added the statement "Positive parity" to the level density output
+file in case of parity-dependent level densities, on the advice
+of Goran Arbanas.
+
+- January 17, 2012
+
+Solved a problem reported by Patric Granholm.
+At energies far below the Coulomb Barrier, some excitation functions
+showed discontinuities. This was due to a too strict choice of 
+pre-equilibrium spin distributions in subroutine binary.f.
+A popepsA constant is now added.
+
+- January 17, 2012
+
+Turned a few TALYS-errors into warnings (TALYS no longer stops) in
+integral.f. Also changed the naming of the associated data into 
+talys/structure/integral in which experimental data and fluxes
+can be found.
+
+- January 21, 2012
+
+Patric Granholm's problem of jan 17 motivated me to extend the
+'preeqspin' keyword. There are now 3 possibilities:
+preeqspin 1 (equivalent to the old 'preeqspin n'): the pre-eq spin 
+  distribution is made equal to the relative spin-dependent population 
+  after compound nucleus emission
+preeqspin 2: the spin distribution from total level densities is adopted
+preeqspin 3 (equivalent to the old 'preeqspin y'): the pre-eq spin 
+  distribution is based on particle-hole state densities
+The input is backward compatible, i.e.
+preeqspin y is transformed into preeqspin 3
+preeqspin n is transformed into preeqspin 1
+Total number of possibilities: preeqspin can be equal to y,n,1,2,3
+
+- February 1, 2012
+
+Added more adjustment flexibility. With the tljadjust keyword the 
+transmission coefficients for the outgoing channel can be changed in a 
+certain energy range. 
+
+- February 3, 2012
+
+Added more adjustment flexibility. With the 'branch' keyword the 
+branching ratio for any discrete level in the database can easily be 
+overwritten in the user input. This may be necessary to adjust isomeric 
+cross sections.
+
+- February 13, 2012
+
+Corrected a bug found by Yuki Watanabe: for charged-particle elastic 
+and inelastic scattering the compound components are not written to 
+output. Corrected angdis.f for this.
+
+- February 13, 2012
+
+Fixed a problem with the calculation of D0 for the case of incident 
+photons, (used for level density studies) found by Stephane Goriely. 
+I changed dtheory.f for this.
+
+- February 14, 2012
+
+Removed a bug in rldm.f, introduced just before the release of 
+TALYS-1.4: A min() function was introduced to prevent an array running 
+out of bounds.  However, this gives huge fission cross sections for 
+neutrons on subactinides (or any other case where the RLDM is needed), 
+as discovered by Stephane Goriely.
+
+- February 16, 2012
+
+On the advice of Stephane Goriely, I made a change in fissionpar.f: if
+no fission barriers are found in the tables with phenomenological 
+values, first the tables of Mamdouh (fismodel 2) are scanned for 
+values, before an analytical model is used.
+
+- February 20, 2012
+
+After a question by Yuki Watanabe, I decided to introduce the 
+'cpang' keyword, to enable the calculation of discrete level 
+compound nucleus angular distributions for incident charged particles
+
+- February 25, 2012
+
+Changed the order of reading lines from files of the best/ directory 
+such that the "best" parameters are now also used for natural targets.
+
+- March 6, 2012
+
+Added radiative capture model for direct and semi-direct capture cross 
+section. For this the 'racap' keyword was made. By default, 'racap n'.
+
+- March 11, 2012
+
+Added new microscopic level densities, this time generated from 
+temperature-dependent HFB calculations and the Gogny D1M nucleon force. 
+This option is now 'ldmodel 6'
+
+- March 27, 2012
+
+Automatically increased the number of included discrete levels for a
+highly excited isomer.
+
+- March 27, 2012
+
+To increase fitting flexibility I added the keywords egradjust, 
+ggradjust, sgradjust, epradjust, gpradjust, spradjust, E0adjust, 
+Exmatchadjust, Tadjust, fisbaradjust and fishwadjust, all with a 
+default value of 1.
+
+- March 27, 2012
+
+About 70 keywords can now have energy-dependent values. After the 
+keyword and its value are given in the input, an energy range can 
+be specified over which the corresponding model parameter is altered. 
+
+- March 29, 2012
+
+Incident energies can now be given in any order, not necessarily in 
+ascending order. They will be sorted first. Also double energy points 
+will be removed. TALYS will thus no longer stop when this is provided.
+
+- April 11 2012
+
+Solved an output bug found by Mahdi Baktiari. At energies far below 
+the Coulomb barrier the direct elastic angular distribution for charged
+particles is not copied into the total column.
+
+- April 21 2012
+
+Changed nexout into nexout2 in do loop around line 70 in specemission.f
+That error has been there for several years.
+
+- April 26 2012
+
+Generalized a few energy grids, so that TALYS can be used up to 600 MeV.
+
+- May 7 2012
+
+Vivian Demetriou found a problem in the alpha folding potential 
+which I corrected.
+
+- August 12 2012
+
+Added keyword 'production' for (medical) isotope production.
+Added decay data subroutine.
+
+- August 15 2012
+
+Extended nucleon OMP to 1 GeV. For this the keywords Vinf, Ejoin,
+w3adjust and w4adjust give some extra flexibility. TALYS can now
+technically be used up to 1 GeV.
+
+- August 28 2012
+
+Added all other routines for medical isotope production. With
+the 'production' keyword, excitation functions are automatically 
+transferred into isotope production rates in MBq. Various 
+extra keywords are included for flexibility.
+
+- September 11 2012
+
+Corrected an error for particle multiplicities found by Pedro Arce.
+The yields should be defined relative to the nonelastic cross section
+and not to the reaction cross section. This makes a difference at
+low energies and will change charged-particle nuclear data libraries, 
+which use this information.
+
+- September 15 2012
+
+Added possibility to locally adjust the OMP parameters for outgoing
+channels only, with the keyword 'incadjust'. If 'incadjust n' then OMP 
+adjustments are not performed for the incident channel. This gives more
+fitting flexibility. Physical argument is that the magnitude of the
+approximation to regard inverse channels as occurring from the ground 
+state, it unknown. (temperature dependent OMP). The default is however 
+still 'incadjust y'.
+
+- September 15 2012
+
+Arnd Junghans discovered a reading error in the RIPL file for S0. 
+Some of the values do not have a decimal point, resulting in a factor 
+of 100 difference for some nuclides. Fortunately S0 is not used, 
+apart from reference, but the error is now corrected anyway. At his 
+advice, I also removed the printing of the neutron strength function 
+at the wrong place (it was in the middle of the gamma data).
+
+- October 6 2012
+
+Introduced a keyword Liso to enforce the isomeric number of the target
+(by default it is determined from the discrete level database).
+
+- October 15 2012
+
+Added a keyword fisfeed to output the fission per excitation energy bin.
+This allows to couple TALYS with a fission yields code, like GEF.
+To enable this, a few outlets in multiple.f had to be made.
+
+- December 10 2012
+
+Changed a statement in the output about level densities. The 'total' 
+column is given per parity. (issue discovered by Paul Koehler).
+
+- December 21 2012
+
+Revised the direct radiative capture model together with Stephane 
+Goriely. Three new keywords were introduced: 
+ldmodelracap, sfexp and sfth.
+
+- December 21 2012
+
+The resulting intermediate code version is called TALYS-1.50
+
+- March 19 2013
+
+Complemented RIPL discrete level database with levels calculated from 
+microscopic densities. A new keyword 'disctable' was introduced to 
+include or exclude such additions. The default is now 'disctable 1', 
+i.e. RIPL discrete levels file + levels added up to level number 100 
+if missing from RIPL.
+
+- April 27 2013
+
+Changed 'ecis06' into 'ecis' for filenames etc., to make 
+the filenames independent of the version of ECIS.
+
+- May 18 2013
+
+Increased boundaries for keyword massexcess from 0.500 to 0.600 a.m.u.
+
+- May 20 2013
+
+Put an if statement around loop 150 in comptarget.f to solve an NaN
+problem found by Satoshi Chiba for astrophysical calculations.
+
+- May 21 2013
+
+Enforced that the non-elastic cross section is non-negative by
+putting a max around xsnonel in binary.f
+
+- May 21 2013
+
+Changed an .lt. into an .le. in tripathi.f which solves a strange ifort
+compilation problem.
+
+- May 27 2013
+
+Problem found by Mahdi Bakhtiari for elastic scattering angular
+distributions for natural targets. For charged particles these
+were not summed to the natural value. Corrected natural.f
+
+- June 4 2013
+
+Wrote more parameters to parameters.dat file
+
+- June 24 2013
+
+Corrected two problems found by Peter Mohr: if cpang y then the
+charged-particle compound elastic angular distribution should
+be anisotropic (though symmetric). Corrected angdis.f for this.
+Also, for incident charged particles, direct discrete
+contributions are not taken into account if a coupling scheme
+is given. The default for the 'spherical' keyword is changed for this.
+
+- June 30 2013
+
+Added call for GEF subroutine, created by Vasily Simutkin and 
+Michail Onegin, to massdis.f to use the Schmidt-Jurado model for 
+fission observables. Introduced the fymodel keyword to choose FY 
+model fymodel 1= Brosa, fymodel 2 = GEF.
+fymodel 1 is now also the default.
+
+- August 18 2013
+
+As requested by Paul Koehler, added the average alpha and proton widths
+in the output of the URR subroutines.
+
+- August 22 2013
+
+Disabled the renormalization of the URR by the NJOY method, as a 
+default at least, to avoid unstable results for the competitive width.
+
+- September 24 2013
+
+Added radiounit and yieldunit keywords to specify units for medical
+isotope production
+
+- October 11 2013
+
+Repaired an error in optical model adjustment, discovered by Vlad and 
+Marilena Avrigeanu, the Coulomb radius was not adjusted with rcadjust.
+
+- December 1 2013
+
+Added new version of GEF subroutine, created by Vasily Simutkin and 
+Michail Onegin, called geftalys.f. Fission yields, P(nu), nubar, and nu
+as function of Z and A are added to the output. Introduced two extra 
+keywords: outfy, to give detailed output of the GEF calculation,
+and gefran, for the number of random events to be fed to GEF.

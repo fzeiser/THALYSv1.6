@@ -35,7 +35,7 @@ c lenpath: length of pathname
 c
 c The maximum length of the path is 60 characters
 c
-      home='/home/finux01b/akoning/talys/'
+      home='/home/fabiobz/talys/'
       lenhome=0
       do 10 i=1,60
         if (home(i:i).eq.' ') goto 100
